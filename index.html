@@ -1,33 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NativeVM | Enterprise Residential Infrastructure</title>
+    <title>NativeVM.live | Premium Residential Cloud Infrastructure</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/markdown-it@13.0.1/dist/markdown-it.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        display: ['Outfit', 'sans-serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
                     },
                     colors: {
                         brand: {
-                            black: '#050505',
-                            dark: '#0A0A0F',
-                            surface: '#12121A',
-                            border: '#1E1E2A',
-                            primary: '#6366f1', // Indigo
-                            accent: '#ec4899', // Pink
+                            bg: '#0B0F19', // Deepest Navy
+                            card: '#111827',
+                            primary: '#3B82F6', // Royal Blue
+                            accent: '#8B5CF6', // Violet
+                            success: '#10B981',
                         }
                     },
-                    backgroundImage: {
-                        'gradient-glow': 'radial-gradient(circle at center, rgba(99, 102, 241, 0.15) 0%, transparent 70%)',
+                    animation: {
+                        'blob': 'blob 7s infinite',
+                        'fade-in': 'fadeIn 0.5s ease-out',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
                     }
                 }
             }
@@ -36,417 +49,466 @@
 
     <style>
         body {
-            background-color: #050505;
-            color: #e2e8f0;
-            overflow-x: hidden;
+            background-color: #0B0F19;
+            color: #F3F4F6;
         }
 
-        /* SPA Transitions */
-        .page-view {
-            display: none;
-            opacity: 0;
-            transition: opacity 0.4s ease-in-out;
-            min-height: 80vh;
+        /* Glassmorphism */
+        .glass {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-card {
+            background: linear-gradient(180deg, rgba(31, 41, 55, 0.6) 0%, rgba(17, 24, 39, 0.8) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
         }
         
-        .page-view.active {
-            display: block;
-            opacity: 1;
-            animation: fadeIn 0.5s ease-out forwards;
+        .glass-card:hover {
+            border-color: rgba(59, 130, 246, 0.4);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -10px rgba(59, 130, 246, 0.15);
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* Text Gradients */
+        .text-gradient {
+            background: linear-gradient(135deg, #60A5FA 0%, #A78BFA 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        /* Glass Cards */
-        .glass-panel {
-            background: rgba(18, 18, 26, 0.6);
-            backdrop-filter: blur(12px);
-            border: 1px solid #1E1E2A;
-        }
-        .glass-panel:hover {
-            border-color: #6366f1;
-            box-shadow: 0 0 30px rgba(99, 102, 241, 0.15);
-        }
-
-        /* Active Nav Link */
-        .nav-link.active {
-            color: #fff;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-        }
-
-        /* Custom Scrollbar */
+        /* Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #050505; }
-        ::-webkit-scrollbar-thumb { background: #1E1E2A; border-radius: 4px; }
+        ::-webkit-scrollbar-track { background: #0B0F19; }
+        ::-webkit-scrollbar-thumb { background: #374151; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #4B5563; }
+
+        /* Modal Transitions */
+        .modal {
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+        }
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
     </style>
 </head>
-<body class="antialiased flex flex-col min-h-screen selection:bg-brand-primary selection:text-white">
+<body class="antialiased overflow-x-hidden relative">
 
-    <!-- Navbar (Persistent) -->
-    <nav class="sticky top-0 z-50 bg-brand-black/80 backdrop-blur-md border-b border-brand-border">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
-            <!-- Logo -->
-            <a href="javascript:void(0)" onclick="router('home')" class="flex items-center gap-2 group">
-                <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-brand-primary to-brand-accent flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-indigo-500/20">
-                    N
+    <!-- Background Blobs -->
+    <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-brand-primary/20 rounded-full mix-blend-screen filter blur-[100px] opacity-30 animate-blob"></div>
+        <div class="absolute top-0 right-1/4 w-96 h-96 bg-brand-accent/20 rounded-full mix-blend-screen filter blur-[100px] opacity-30 animate-blob animation-delay-2000"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass border-b-0 border-white/5 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-2 group">
+                    <div class="w-8 h-8 rounded bg-gradient-to-br from-blue-500 to-violet-600 flex items-center justify-center text-white font-bold">
+                        <i class="fa-solid fa-server"></i>
+                    </div>
+                    <span class="text-xl font-bold tracking-tight text-white">Native<span class="text-blue-500">VM</span></span>
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-400">
+                    <a href="#home" class="hover:text-white transition-colors">Home</a>
+                    <a href="#products" class="hover:text-white transition-colors">Products</a>
+                    <a href="#about" class="hover:text-white transition-colors">About Us</a>
+                    <a href="#contact" class="hover:text-white transition-colors">Contact</a>
                 </div>
-                <span class="font-display font-bold text-xl tracking-tight text-white">Native<span class="text-brand-primary">VM</span></span>
-            </a>
 
-            <!-- Navigation Links -->
-            <div class="hidden md:flex items-center gap-1 bg-brand-surface/50 p-1 rounded-xl border border-brand-border/50">
-                <button onclick="router('home')" class="nav-link active px-4 py-2 text-sm font-medium text-slate-400 hover:text-white transition-all">Overview</button>
-                <button onclick="router('products')" class="nav-link px-4 py-2 text-sm font-medium text-slate-400 hover:text-white transition-all">Pricing</button>
-                <button onclick="router('features')" class="nav-link px-4 py-2 text-sm font-medium text-slate-400 hover:text-white transition-all">Features</button>
-                <button onclick="router('contact')" class="nav-link px-4 py-2 text-sm font-medium text-slate-400 hover:text-white transition-all">Contact</button>
-            </div>
-
-            <!-- Auth Actions -->
-            <div class="flex items-center gap-4">
-                <button onclick="router('login')" class="hidden md:block text-sm font-medium text-slate-400 hover:text-white transition">Sign In</button>
-                <button onclick="router('products')" class="bg-brand-primary hover:bg-indigo-500 text-white px-5 py-2.5 rounded-lg text-sm font-bold transition shadow-lg shadow-indigo-500/25">
-                    Deploy Server
-                </button>
+                <!-- Auth Buttons -->
+                <div class="flex items-center gap-4">
+                    <button onclick="openModal('login')" class="text-sm font-medium text-slate-300 hover:text-white transition hidden sm:block">Log In</button>
+                    <button onclick="openModal('signup')" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg text-sm font-bold transition shadow-lg shadow-blue-600/20">
+                        Sign Up
+                    </button>
+                </div>
             </div>
         </div>
     </nav>
 
-    <!-- MAIN CONTENT CONTAINER (SPA VIEWS) -->
-    <main class="flex-grow relative">
-        
-        <!-- === HOME PAGE VIEW === -->
-        <section id="view-home" class="page-view active">
-            <div class="relative pt-24 pb-32 px-6 overflow-hidden">
-                <!-- Background Effects -->
-                <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl bg-gradient-glow pointer-events-none"></div>
+    <!-- Hero Section -->
+    <section id="home" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 px-4">
+        <div class="max-w-7xl mx-auto text-center relative z-10">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold uppercase tracking-wider mb-6">
+                <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span> Now with 10Gbps Uplink
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                Native ISP Cloud <br>
+                <span class="text-gradient">Infrastructure</span>
+            </h1>
+            
+            <p class="text-lg text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed font-light">
+                Deploy high-performance Residential VPS instances instantly. Engineered for survey operations, secure browsing, and business continuity with zero IP flagging.
+            </p>
 
-                <div class="max-w-5xl mx-auto text-center relative z-10">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-surface border border-brand-border text-brand-primary text-xs font-semibold uppercase tracking-wider mb-8">
-                        <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> Systems Operational
-                    </div>
-                    
-                    <h1 class="font-display text-5xl md:text-7xl font-bold mb-6 leading-tight">
-                        Cloud Infrastructure <br>
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-primary to-brand-accent">Without Boundaries.</span>
-                    </h1>
-                    
-                    <p class="text-lg text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed font-light">
-                        Premium VPS with genuine <strong>ISP Residential IPs</strong>. Experience 0% fraud score, 1Gbps unmetered bandwidth, and complete anonymity for your business operations.
-                    </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#products" class="bg-white text-brand-bg px-8 py-4 rounded-xl font-bold text-lg hover:bg-slate-200 transition-all">
+                    View Pricing
+                </a>
+                <a href="#contact" class="glass text-white px-8 py-4 rounded-xl font-medium text-lg hover:bg-white/5 transition-all">
+                    Contact Sales
+                </a>
+            </div>
 
-                    <div class="flex flex-col sm:flex-row justify-center gap-4">
-                        <button onclick="router('products')" class="bg-white text-black px-8 py-4 rounded-xl font-bold text-lg hover:bg-slate-200 transition-all shadow-[0_0_20px_rgba(255,255,255,0.15)]">
-                            View Pricing Plans
-                        </button>
-                        <button onclick="router('features')" class="glass-panel text-white px-8 py-4 rounded-xl font-medium text-lg hover:bg-white/5 transition-all">
-                            Explore Features
-                        </button>
-                    </div>
-
-                    <!-- Tech Stack Grid -->
-                    <div class="mt-24 grid grid-cols-2 md:grid-cols-4 gap-4 text-left">
-                        <div class="glass-panel p-6 rounded-xl">
-                            <i class="fa-solid fa-fingerprint text-brand-primary text-2xl mb-3"></i>
-                            <h3 class="font-bold text-white">Residential ISP</h3>
-                            <p class="text-xs text-slate-500 mt-1">AT&T / Verizon ASN</p>
-                        </div>
-                        <div class="glass-panel p-6 rounded-xl">
-                            <i class="fa-solid fa-bolt text-yellow-400 text-2xl mb-3"></i>
-                            <h3 class="font-bold text-white">NVMe Gen4</h3>
-                            <p class="text-xs text-slate-500 mt-1">7000MB/s Read Speed</p>
-                        </div>
-                        <div class="glass-panel p-6 rounded-xl">
-                            <i class="fa-solid fa-shield-halved text-green-400 text-2xl mb-3"></i>
-                            <h3 class="font-bold text-white">DDoS Shield</h3>
-                            <p class="text-xs text-slate-500 mt-1">Layer 3/4 Mitigation</p>
-                        </div>
-                        <div class="glass-panel p-6 rounded-xl">
-                            <i class="fa-solid fa-network-wired text-brand-accent text-2xl mb-3"></i>
-                            <h3 class="font-bold text-white">1Gbps Port</h3>
-                            <p class="text-xs text-slate-500 mt-1">Unmetered Traffic</p>
-                        </div>
-                    </div>
+            <!-- Stats Bar -->
+            <div class="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 border-t border-white/5 pt-10 max-w-4xl mx-auto">
+                <div>
+                    <div class="text-3xl font-bold text-white">100%</div>
+                    <div class="text-xs text-slate-500 uppercase tracking-wide mt-1">Residential IP</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-bold text-white">&lt; 1ms</div>
+                    <div class="text-xs text-slate-500 uppercase tracking-wide mt-1">Local Latency</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-bold text-white">99.99%</div>
+                    <div class="text-xs text-slate-500 uppercase tracking-wide mt-1">SLA Uptime</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-bold text-white">24/7</div>
+                    <div class="text-xs text-slate-500 uppercase tracking-wide mt-1">Expert Support</div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- === PRODUCTS / PRICING VIEW === -->
-        <section id="view-products" class="page-view">
-            <div class="py-20 px-6 max-w-7xl mx-auto">
-                <div class="text-center mb-16">
-                    <h2 class="font-display text-4xl font-bold mb-4">Select Your <span class="text-brand-primary">Instance</span></h2>
-                    <p class="text-slate-400">All plans include KVM virtualization and instant deployment.</p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    
-                    <!-- Basic Plan -->
-                    <div class="glass-panel p-8 rounded-2xl flex flex-col group">
-                        <div class="mb-6">
-                            <h3 class="font-display text-xl font-bold text-white">Basic</h3>
-                            <p class="text-xs text-slate-500 mt-1">Starter Kit</p>
-                        </div>
-                        <div class="flex items-baseline gap-1 mb-8">
-                            <span class="text-4xl font-bold text-white">$16</span>
-                            <span class="text-slate-500">/mo</span>
-                        </div>
-                        <div class="space-y-4 mb-8 flex-1 text-sm text-slate-400">
-                            <div class="flex justify-between border-b border-white/5 pb-2"><span>CPU</span> <span class="text-white">2 Cores</span></div>
-                            <div class="flex justify-between border-b border-white/5 pb-2"><span>RAM</span> <span class="text-white">2 GB</span></div>
-                            <div class="flex justify-between border-b border-white/5 pb-2"><span>Storage</span> <span class="text-white">40 GB NVMe</span></div>
-                            <div class="flex justify-between border-b border-white/5 pb-2"><span>IP Type</span> <span class="text-brand-primary">1 ISP/Res</span></div>
-                            <div class="flex justify-between pb-2"><span>Uplink</span> <span class="text-white">1 Gbps</span></div>
-                        </div>
-                        <button class="w-full py-3 rounded-lg border border-white/10 text-center font-medium hover:bg-white hover:text-black transition">Deploy Basic</button>
-                    </div>
-
-                    <!-- Starter Plan (Highlighted) -->
-                    <div class="relative group">
-                        <div class="absolute -inset-[1px] bg-gradient-to-b from-brand-primary to-brand-accent rounded-2xl opacity-75 group-hover:opacity-100 transition duration-500"></div>
-                        <div class="relative bg-brand-surface h-full p-8 rounded-2xl flex flex-col">
-                            <div class="absolute top-0 right-0 bg-brand-primary text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl rounded-tr-xl uppercase tracking-wider">Best Value</div>
-                            <div class="mb-6">
-                                <h3 class="font-display text-xl font-bold text-white">Starter</h3>
-                                <p class="text-xs text-slate-500 mt-1">Recommended for CPA</p>
-                            </div>
-                            <div class="flex items-baseline gap-1 mb-8">
-                                <span class="text-5xl font-bold text-white">$20</span>
-                                <span class="text-slate-500">/mo</span>
-                            </div>
-                            <div class="space-y-4 mb-8 flex-1 text-sm text-slate-300">
-                                <div class="flex justify-between border-b border-white/5 pb-2"><span>CPU</span> <span class="text-white font-bold">4 Cores</span></div>
-                                <div class="flex justify-between border-b border-white/5 pb-2"><span>RAM</span> <span class="text-white font-bold">4 GB</span></div>
-                                <div class="flex justify-between border-b border-white/5 pb-2"><span>Storage</span> <span class="text-white font-bold">60 GB NVMe</span></div>
-                                <div class="flex justify-between border-b border-white/5 pb-2"><span>IP Type</span> <span class="text-brand-primary font-bold">1 ISP/Res</span></div>
-                                <div class="flex justify-between border-b border-white/5 pb-2"><span>Security</span> <span class="text-green-400">DDoS Pro</span></div>
-                                <div class="flex justify-between pb-2"><span>OS</span> <span class="text-white">Win / Linux</span></div>
-                            </div>
-                            <button class="w-full py-4 rounded-lg bg-brand-primary hover:bg-indigo-500 text-white font-bold transition shadow-lg shadow-indigo-500/25">Deploy Starter</button>
-                        </div>
-                    </div>
-
-                    <!-- Professional Plan -->
-                    <div class="glass-panel p-8 rounded-2xl flex flex-col group">
-                        <div class="mb-6">
-                            <h3 class="font-display text-xl font-bold text-white">Professional</h3>
-                            <p class="text-xs text-slate-500 mt-1">Heavy Workloads</p>
-                        </div>
-                        <div class="flex items-baseline gap-1 mb-8">
-                            <span class="text-4xl font-bold text-white">$35</span>
-                            <span class="text-slate-500">/mo</span>
-                        </div>
-                        <div class="space-y-4 mb-8 flex-1 text-sm text-slate-400">
-                            <div class="flex justify-between border-b border-white/5 pb-2"><span>CPU</span> <span class="text-white">8 Cores</span></div>
-                            <div class="flex justify-between border-b border-white/5 pb-2"><span>RAM</span> <span class="text-white">8 GB</span></div>
-                            <div class="flex justify-between border-b border-white/5 pb-2"><span>Storage</span> <span class="text-white">100 GB NVMe</span></div>
-                            <div class="flex justify-between border-b border-white/5 pb-2"><span>IP Type</span> <span class="text-brand-primary">1 ISP/Res</span></div>
-                            <div class="flex justify-between pb-2"><span>Support</span> <span class="text-white">Priority</span></div>
-                        </div>
-                        <button class="w-full py-3 rounded-lg border border-white/10 text-center font-medium hover:bg-white hover:text-black transition">Deploy Pro</button>
-                    </div>
-
-                    <!-- Ultimate Plan (Added as requested) -->
-                    <div class="glass-panel p-8 rounded-2xl flex flex-col group border-brand-accent/30">
-                        <div class="mb-6">
-                            <h3 class="font-display text-xl font-bold text-brand-accent">Ultimate</h3>
-                            <p class="text-xs text-slate-500 mt-1">Maximum Power</p>
-                        </div>
-                        <div class="flex items-baseline gap-1 mb-8">
-                            <span class="text-4xl font-bold text-white">$65</span>
-                            <span class="text-slate-500">/mo</span>
-                        </div>
-                        <div class="space-y-4 mb-8 flex-1 text-sm text-slate-400">
-                            <div class="flex justify-between border-b border-white/5 pb-2"><span>CPU</span> <span class="text-white">16 Cores</span></div>
-                            <div class="flex justify-between border-b border-white/5 pb-2"><span>RAM</span> <span class="text-white">32 GB</span></div>
-                            <div class="flex justify-between border-b border-white/5 pb-2"><span>Storage</span> <span class="text-white">250 GB NVMe</span></div>
-                            <div class="flex justify-between border-b border-white/5 pb-2"><span>IP Type</span> <span class="text-brand-primary">1 ISP/Res</span></div>
-                            <div class="flex justify-between pb-2"><span>Traffic</span> <span class="text-white">Unmetered</span></div>
-                        </div>
-                        <button class="w-full py-3 rounded-lg border border-brand-accent/50 text-brand-accent hover:bg-brand-accent hover:text-white transition font-bold">Deploy Ultimate</button>
-                    </div>
-
-                </div>
+    <!-- Products / Pricing Section -->
+    <section id="products" class="py-24 bg-black/20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4">Choose Your <span class="text-blue-500">Instance</span></h2>
+                <p class="text-slate-400">All plans include dedicated ISP/Residential IP addresses and DDoS protection.</p>
             </div>
-        </section>
 
-        <!-- === FEATURES VIEW === -->
-        <section id="view-features" class="page-view">
-            <div class="py-20 px-6 max-w-7xl mx-auto">
-                <div class="text-center mb-16">
-                    <h2 class="font-display text-4xl font-bold mb-4">Technical <span class="text-white">Specifications</span></h2>
-                    <p class="text-slate-400">Engineered for performance, built for reliability.</p>
-                </div>
-
-                <div class="grid md:grid-cols-2 gap-12 items-center">
-                    <div class="space-y-8">
-                        <div class="flex gap-4">
-                            <div class="w-12 h-12 rounded-lg bg-brand-surface border border-brand-border flex items-center justify-center shrink-0">
-                                <i class="fa-brands fa-windows text-2xl text-blue-400"></i>
-                            </div>
-                            <div>
-                                <h3 class="text-xl font-bold text-white mb-2">Flexible OS Deployment</h3>
-                                <p class="text-slate-400 text-sm leading-relaxed">Choose between Windows 10/11, Windows Server 2019/2022, or popular Linux distributions (Ubuntu, CentOS, Debian). Reinstall anytime with 1-click.</p>
-                            </div>
-                        </div>
-                        <div class="flex gap-4">
-                            <div class="w-12 h-12 rounded-lg bg-brand-surface border border-brand-border flex items-center justify-center shrink-0">
-                                <i class="fa-solid fa-server text-2xl text-brand-accent"></i>
-                            </div>
-                            <div>
-                                <h3 class="text-xl font-bold text-white mb-2">Bare Metal Performance</h3>
-                                <p class="text-slate-400 text-sm leading-relaxed">We use KVM virtualization to ensure your resources are dedicated. No noisy neighbors, just raw power from AMD EPYC processors.</p>
-                            </div>
-                        </div>
-                        <div class="flex gap-4">
-                            <div class="w-12 h-12 rounded-lg bg-brand-surface border border-brand-border flex items-center justify-center shrink-0">
-                                <i class="fa-solid fa-earth-americas text-2xl text-green-400"></i>
-                            </div>
-                            <div>
-                                <h3 class="text-xl font-bold text-white mb-2">Global ISP Network</h3>
-                                <p class="text-slate-400 text-sm leading-relaxed">Our IP pool consists of premium residential blocks. Perfect for tasks requiring high trust scores and low fraud detection rates.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="relative h-[400px] bg-brand-surface rounded-2xl border border-brand-border overflow-hidden flex items-center justify-center">
-                         <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20"></div>
-                         <div class="text-center relative z-10">
-                             <i class="fa-solid fa-gauge-high text-6xl text-brand-primary mb-4 animate-pulse"></i>
-                             <h3 class="text-2xl font-bold text-white">10 Gbps</h3>
-                             <p class="text-slate-500">Backbone Capacity</p>
-                         </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- === LOGIN VIEW === -->
-        <section id="view-login" class="page-view">
-            <div class="min-h-[80vh] flex items-center justify-center px-4">
-                <div class="w-full max-w-md bg-brand-surface border border-brand-border p-8 rounded-2xl shadow-2xl">
-                    <div class="text-center mb-8">
-                        <h2 class="text-2xl font-bold text-white">Welcome Back</h2>
-                        <p class="text-slate-400 text-sm">Sign in to manage your instances</p>
-                    </div>
-                    <form class="space-y-5">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Email Address</label>
-                            <input type="email" class="w-full bg-brand-black border border-brand-border rounded-lg p-3 text-white focus:border-brand-primary outline-none transition">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Password</label>
-                            <input type="password" class="w-full bg-brand-black border border-brand-border rounded-lg p-3 text-white focus:border-brand-primary outline-none transition">
-                        </div>
-                        <button class="w-full bg-brand-primary hover:bg-indigo-500 text-white font-bold py-3 rounded-lg transition">Log In</button>
-                    </form>
-                    <div class="mt-6 text-center text-sm text-slate-500">
-                        Don't have an account? <button onclick="router('products')" class="text-brand-primary hover:underline">Get Started</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- === CONTACT VIEW === -->
-        <section id="view-contact" class="page-view">
-            <div class="py-20 px-6 max-w-4xl mx-auto">
-                <div class="text-center mb-12">
-                    <h2 class="font-display text-4xl font-bold mb-4">Contact <span class="text-white">Support</span></h2>
-                    <p class="text-slate-400">Our team is available 24/7/365.</p>
-                </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
                 
-                <div class="glass-panel p-8 rounded-2xl">
-                    <form class="grid grid-cols-1 gap-6">
-                        <div class="grid grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Name</label>
-                                <input type="text" class="w-full bg-brand-black border border-brand-border rounded-lg p-3 text-white focus:border-brand-primary outline-none transition">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Email</label>
-                                <input type="email" class="w-full bg-brand-black border border-brand-border rounded-lg p-3 text-white focus:border-brand-primary outline-none transition">
-                            </div>
+                <!-- Basic Plan -->
+                <div class="glass-card p-8 rounded-2xl flex flex-col">
+                    <h3 class="text-xl font-bold text-white">Basic</h3>
+                    <p class="text-sm text-slate-500 mb-6">Entry level tasks.</p>
+                    <div class="flex items-baseline gap-1 mb-6">
+                        <span class="text-4xl font-bold text-white">$16</span>
+                        <span class="text-slate-500">/mo</span>
+                    </div>
+                    <ul class="space-y-4 mb-8 flex-1 text-sm text-slate-300">
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-microchip text-blue-500"></i> 2 vCPU Cores</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-memory text-blue-500"></i> 2 GB RAM</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-database text-blue-500"></i> 40 GB NVMe</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-globe text-green-400"></i> 1 ISP IP</li>
+                    </ul>
+                    <a href="javascript:void(0)" onclick="openModal('signup')" class="w-full py-3 rounded-lg border border-white/20 text-center font-semibold hover:bg-white hover:text-black transition">Get Started</a>
+                </div>
+
+                <!-- Starter Plan (Highlighted) -->
+                <div class="relative p-[1px] rounded-2xl bg-gradient-to-b from-blue-500 to-violet-600 transform md:-translate-y-4 shadow-2xl shadow-blue-900/40">
+                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-600 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide text-white shadow-lg">Most Popular</div>
+                    <div class="bg-brand-card rounded-[15px] p-8 h-full flex flex-col">
+                        <h3 class="text-xl font-bold text-white">Starter</h3>
+                        <p class="text-sm text-slate-400 mb-6">Best for CPA & Surveys.</p>
+                        <div class="flex items-baseline gap-1 mb-6">
+                            <span class="text-5xl font-bold text-white">$20</span>
+                            <span class="text-slate-500">/mo</span>
                         </div>
+                        <ul class="space-y-4 mb-8 flex-1 text-sm text-white">
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-microchip text-blue-400"></i> 4 vCPU Cores</li>
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-memory text-blue-400"></i> 4 GB RAM</li>
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-database text-blue-400"></i> 60 GB NVMe</li>
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-bolt text-yellow-400"></i> 1Gbps Uplink</li>
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-shield-halved text-green-400"></i> DDoS Protected</li>
+                            <li class="flex items-center gap-3"><i class="fa-brands fa-windows text-blue-400"></i> Win/Linux OS</li>
+                        </ul>
+                        <a href="javascript:void(0)" onclick="openModal('signup')" class="w-full py-4 rounded-lg bg-blue-600 text-white text-center font-bold hover:bg-blue-500 transition">Get Started</a>
+                    </div>
+                </div>
+
+                <!-- Professional Plan -->
+                <div class="glass-card p-8 rounded-2xl flex flex-col">
+                    <h3 class="text-xl font-bold text-white">Professional</h3>
+                    <p class="text-sm text-slate-500 mb-6">Heavy multitasking.</p>
+                    <div class="flex items-baseline gap-1 mb-6">
+                        <span class="text-4xl font-bold text-white">$35</span>
+                        <span class="text-slate-500">/mo</span>
+                    </div>
+                    <ul class="space-y-4 mb-8 flex-1 text-sm text-slate-300">
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-microchip text-blue-500"></i> 8 vCPU Cores</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-memory text-blue-500"></i> 8 GB RAM</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-database text-blue-500"></i> 100 GB NVMe</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-globe text-green-400"></i> 1 ISP IP</li>
+                    </ul>
+                    <a href="javascript:void(0)" onclick="openModal('signup')" class="w-full py-3 rounded-lg border border-white/20 text-center font-semibold hover:bg-white hover:text-black transition">Get Started</a>
+                </div>
+
+                <!-- Ultimate Plan (Bonus) -->
+                <div class="glass-card p-8 rounded-2xl flex flex-col border-violet-500/30">
+                    <h3 class="text-xl font-bold text-violet-400">Ultimate</h3>
+                    <p class="text-sm text-slate-500 mb-6">Maximum Performance.</p>
+                    <div class="flex items-baseline gap-1 mb-6">
+                        <span class="text-4xl font-bold text-white">$65</span>
+                        <span class="text-slate-500">/mo</span>
+                    </div>
+                    <ul class="space-y-4 mb-8 flex-1 text-sm text-slate-300">
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-microchip text-violet-500"></i> 16 vCPU Cores</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-memory text-violet-500"></i> 32 GB RAM</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-database text-violet-500"></i> 250 GB NVMe</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-crown text-yellow-500"></i> Priority Support</li>
+                    </ul>
+                    <a href="javascript:void(0)" onclick="openModal('signup')" class="w-full py-3 rounded-lg border border-violet-500/50 text-violet-300 hover:bg-violet-600 hover:text-white transition font-semibold">Get Started</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Advisor Section -->
+    <section class="py-20 px-4 border-y border-white/5 bg-brand-bg">
+        <div class="max-w-4xl mx-auto text-center">
+            <span class="text-blue-500 font-bold tracking-widest text-xs uppercase mb-2 block">Powered by Gemini AI</span>
+            <h2 class="text-3xl font-bold mb-8">Not sure which plan fits?</h2>
+            <div class="glass p-1 rounded-xl relative">
+                <input type="text" id="ai-input" placeholder="e.g. I need a server for CPA marketing with 50 daily users..." class="w-full bg-brand-bg/50 border border-white/10 rounded-lg py-4 px-6 text-white focus:outline-none focus:border-blue-500 transition">
+                <button onclick="askNativeAI()" id="ai-btn" class="absolute right-2 top-2 bottom-2 bg-blue-600 hover:bg-blue-500 text-white px-6 rounded-lg font-bold transition">
+                    Ask NativeAI
+                </button>
+            </div>
+            <div id="ai-result" class="hidden mt-6 text-left glass p-6 rounded-xl border-l-4 border-blue-500 text-slate-300 text-sm"></div>
+        </div>
+    </section>
+
+    <!-- About / Features -->
+    <section id="about" class="py-24 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-16 items-center">
+            <div>
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">Built for the <br><span class="text-white">Modern Web</span></h2>
+                <p class="text-slate-400 mb-6 leading-relaxed">
+                    NativeVM provides genuine ISP-assigned IP addresses, ensuring your digital footprint looks exactly like a residential user. This eliminates the risk of datacenter flags common with other providers.
+                </p>
+                <ul class="space-y-4">
+                    <li class="flex items-start gap-3">
+                        <div class="mt-1 w-6 h-6 rounded bg-green-500/20 flex items-center justify-center text-green-400"><i class="fa-solid fa-check text-xs"></i></div>
                         <div>
-                            <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Subject</label>
-                            <select class="w-full bg-brand-black border border-brand-border rounded-lg p-3 text-slate-300 focus:border-brand-primary outline-none transition">
-                                <option>Sales Inquiry</option>
-                                <option>Technical Support</option>
-                                <option>Billing</option>
-                            </select>
+                            <strong class="text-white block">Zero-Flag Guarantee</strong>
+                            <span class="text-sm text-slate-500">Perfect for Surveys & Ad Verification.</span>
                         </div>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <div class="mt-1 w-6 h-6 rounded bg-blue-500/20 flex items-center justify-center text-blue-400"><i class="fa-solid fa-check text-xs"></i></div>
                         <div>
-                            <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Message</label>
-                            <textarea rows="5" class="w-full bg-brand-black border border-brand-border rounded-lg p-3 text-white focus:border-brand-primary outline-none transition"></textarea>
+                            <strong class="text-white block">Instant Provisioning</strong>
+                            <span class="text-sm text-slate-500">OS installation in under 60 seconds.</span>
                         </div>
-                        <button class="bg-white text-black font-bold py-3 rounded-lg hover:bg-slate-200 transition">Send Message</button>
-                    </form>
+                    </li>
+                </ul>
+            </div>
+            <div class="relative">
+                <div class="absolute inset-0 bg-blue-500/20 blur-[80px]"></div>
+                <div class="glass-card p-6 rounded-xl relative z-10 border border-white/10">
+                    <div class="flex items-center justify-between mb-4 border-b border-white/5 pb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                        </div>
+                        <span class="text-xs font-mono text-slate-500">root@nativevm:~#</span>
+                    </div>
+                    <div class="font-mono text-sm space-y-2">
+                        <div class="text-green-400">$ ping nativevm.live</div>
+                        <div class="text-slate-300">PING nativevm.live (192.168.1.1) 56 data bytes</div>
+                        <div class="text-slate-300">64 bytes from native-isp: icmp_seq=1 ttl=56 <span class="text-blue-400">time=0.8ms</span></div>
+                        <div class="text-slate-300">64 bytes from native-isp: icmp_seq=2 ttl=56 <span class="text-blue-400">time=0.9ms</span></div>
+                        <div class="text-slate-300">--- nativevm ping statistics ---</div>
+                        <div class="text-slate-300">2 packets transmitted, 0% packet loss</div>
+                    </div>
                 </div>
             </div>
-        </section>
-
-    </main>
+        </div>
+    </section>
 
     <!-- Footer -->
-    <footer class="bg-brand-black border-t border-brand-border pt-16 pb-8">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-8">
-                <div>
-                    <span class="font-display font-bold text-2xl text-white">Native<span class="text-brand-primary">VM</span></span>
-                    <p class="text-slate-500 text-sm mt-2">Enterprise Grade Residential Infrastructure.</p>
+    <footer id="contact" class="bg-black border-t border-white/5 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-10 mb-12">
+                <div class="col-span-1 md:col-span-1">
+                    <span class="text-xl font-bold text-white">Native<span class="text-blue-500">VM</span></span>
+                    <p class="text-sm text-slate-500 mt-4">Premium Residential Cloud Infrastructure for professionals worldwide.</p>
                 </div>
-                <div class="flex gap-6 text-slate-400">
-                    <a href="javascript:void(0)" onclick="router('home')" class="hover:text-white transition">Home</a>
-                    <a href="javascript:void(0)" onclick="router('products')" class="hover:text-white transition">Pricing</a>
-                    <a href="javascript:void(0)" onclick="router('contact')" class="hover:text-white transition">Support</a>
-                    <a href="#" class="hover:text-white transition">Terms</a>
+                <div>
+                    <h4 class="text-white font-bold mb-4">Product</h4>
+                    <ul class="space-y-2 text-sm text-slate-500">
+                        <li><a href="#" class="hover:text-blue-400">Pricing</a></li>
+                        <li><a href="#" class="hover:text-blue-400">Locations</a></li>
+                        <li><a href="#" class="hover:text-blue-400">SLA</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4">Company</h4>
+                    <ul class="space-y-2 text-sm text-slate-500">
+                        <li><a href="#" class="hover:text-blue-400">About</a></li>
+                        <li><a href="#" class="hover:text-blue-400">Contact</a></li>
+                        <li><a href="#" class="hover:text-blue-400">Terms</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4">Contact</h4>
+                    <ul class="space-y-2 text-sm text-slate-500">
+                        <li>support@nativevm.live</li>
+                        <li>+1 (555) 123-4567</li>
+                        <li class="flex gap-4 mt-4 text-lg">
+                            <a href="#" class="hover:text-blue-500"><i class="fa-brands fa-twitter"></i></a>
+                            <a href="#" class="hover:text-blue-500"><i class="fa-brands fa-discord"></i></a>
+                            <a href="#" class="hover:text-blue-500"><i class="fa-brands fa-telegram"></i></a>
+                        </li>
+                    </ul>
                 </div>
             </div>
-            <div class="text-center text-xs text-slate-600 border-t border-brand-border pt-8">
+            <div class="border-t border-white/5 pt-8 text-center text-xs text-slate-600">
                 &copy; 2026 NativeVM.live. All rights reserved.
             </div>
         </div>
     </footer>
 
-    <!-- Router Script -->
+    <!-- MODALS (Login / Signup) -->
+    
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal fixed inset-0 z-[60] flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeModal()"></div>
+        <div class="modal-content glass-card relative w-full max-w-md p-8 rounded-2xl">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-500 hover:text-white"><i class="fa-solid fa-times"></i></button>
+            
+            <h2 class="text-2xl font-bold text-white mb-2">Welcome Back</h2>
+            <p class="text-slate-400 text-sm mb-6">Login to manage your instances.</p>
+            
+            <form class="space-y-4" onsubmit="event.preventDefault(); alert('Login API integration required.');">
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Email Address</label>
+                    <input type="email" class="w-full bg-black/30 border border-white/10 rounded-lg p-3 text-white focus:border-blue-500 focus:outline-none transition">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Password</label>
+                    <input type="password" class="w-full bg-black/30 border border-white/10 rounded-lg p-3 text-white focus:border-blue-500 focus:outline-none transition">
+                </div>
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-lg transition shadow-lg shadow-blue-600/20">Log In</button>
+            </form>
+            <div class="mt-4 text-center text-sm text-slate-500">
+                No account? <button onclick="switchModal('signup')" class="text-blue-400 hover:underline">Sign up</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div id="signup-modal" class="modal fixed inset-0 z-[60] flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeModal()"></div>
+        <div class="modal-content glass-card relative w-full max-w-md p-8 rounded-2xl">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-500 hover:text-white"><i class="fa-solid fa-times"></i></button>
+            
+            <h2 class="text-2xl font-bold text-white mb-2">Create Account</h2>
+            <p class="text-slate-400 text-sm mb-6">Deploy your first NativeVM in seconds.</p>
+            
+            <form class="space-y-4" onsubmit="event.preventDefault(); alert('Registration API integration required.');">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">First Name</label>
+                        <input type="text" class="w-full bg-black/30 border border-white/10 rounded-lg p-3 text-white focus:border-blue-500 focus:outline-none transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Last Name</label>
+                        <input type="text" class="w-full bg-black/30 border border-white/10 rounded-lg p-3 text-white focus:border-blue-500 focus:outline-none transition">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Email Address</label>
+                    <input type="email" class="w-full bg-black/30 border border-white/10 rounded-lg p-3 text-white focus:border-blue-500 focus:outline-none transition">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Password</label>
+                    <input type="password" class="w-full bg-black/30 border border-white/10 rounded-lg p-3 text-white focus:border-blue-500 focus:outline-none transition">
+                </div>
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-lg transition shadow-lg shadow-blue-600/20">Create Account</button>
+            </form>
+            <div class="mt-4 text-center text-sm text-slate-500">
+                Already have an account? <button onclick="switchModal('login')" class="text-blue-400 hover:underline">Log in</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logic -->
     <script>
-        function router(viewName) {
-            // 1. Hide all views
-            const views = document.querySelectorAll('.page-view');
-            views.forEach(view => {
-                view.classList.remove('active');
-            });
-
-            // 2. Show target view
-            const targetView = document.getElementById('view-' + viewName);
-            if (targetView) {
-                targetView.classList.add('active');
-            }
-
-            // 3. Update Navbar State
-            const navLinks = document.querySelectorAll('.nav-link');
-            navLinks.forEach(link => {
-                // Reset styling
-                link.classList.remove('active', 'text-white');
-                link.classList.add('text-slate-400');
-                
-                // Highlight active link
-                if (link.getAttribute('onclick').includes(viewName)) {
-                    link.classList.add('active', 'text-white');
-                    link.classList.remove('text-slate-400');
-                }
-            });
-
-            // 4. Scroll to top instantly for "New Page" feel
-            window.scrollTo(0, 0);
+        // Modal Logic
+        function openModal(id) {
+            closeModal(); // Close any open ones
+            document.getElementById(id + '-modal').classList.add('active');
         }
 
-        // Initialize Home
-        document.addEventListener('DOMContentLoaded', () => {
-            router('home');
-        });
+        function closeModal() {
+            document.querySelectorAll('.modal').forEach(m => m.classList.remove('active'));
+        }
+
+        function switchModal(targetId) {
+            closeModal();
+            setTimeout(() => openModal(targetId), 300);
+        }
+
+        // AI Logic
+        const apiKey = ""; // System Injected
+
+        async function askNativeAI() {
+            const input = document.getElementById('ai-input').value;
+            const output = document.getElementById('ai-result');
+            const btn = document.getElementById('ai-btn');
+            
+            if(!input) return;
+
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i>';
+            output.classList.remove('hidden');
+            output.innerHTML = 'Analyzing requirements...';
+
+            const prompt = `You are NativeAI, an expert sales engineer for NativeVM.live.
+            Plans:
+            - Basic ($16): 2 Core, 2GB RAM. Good for light tasks.
+            - Starter ($20): 4 Core, 4GB RAM. BEST VALUE. Good for CPA/Survey.
+            - Professional ($35): 8 Core, 8GB RAM. Heavy duty.
+            - Ultimate ($65): 16 Core, 32GB RAM. Extreme power.
+            
+            User asks: "${input}"
+            Recommend ONE plan concisely in markdown. Focus on ISP IP benefit.`;
+
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: input }] }],
+                        systemInstruction: { parts: [{ text: prompt }] }
+                    })
+                });
+                const data = await response.json();
+                const text = data.candidates[0].content.parts[0].text;
+                
+                output.innerHTML = window.markdownit().render(text);
+            } catch (e) {
+                output.innerHTML = "Error connecting to AI. Please check specifications manually.";
+            } finally {
+                btn.innerHTML = 'Ask NativeAI';
+            }
+        }
     </script>
 </body>
 </html>
