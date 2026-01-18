@@ -286,7 +286,7 @@
                     <div class="w-10 h-10 rounded-lg btn-gradient flex items-center justify-center text-white font-bold shadow-lg">
                         <i class="fas fa-server text-lg"></i>
                     </div>
-                    <span class="text-xl font-bold text-white">Native<span class="text-purple-400">VM</span><span class="text-slate-400">.live</span></span>
+                    <span class="text-xl font-bold text-white">Native<span class="text-purple-400">VM</span></span>
                 </a>
 
                 <div class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
@@ -391,7 +391,7 @@
 
                 <div class="flex justify-center gap-4 mb-16 flex-wrap">
                     <button onclick="toggleProductTab('residential')" id="tab-residential" class="px-8 py-3 rounded-full font-bold transition-all transform hover:scale-105 tab-active">
-                        USA Residential VPS
+                        🇺🇸 USA Residential VPS
                     </button>
                     <button onclick="toggleProductTab('physical')" id="tab-physical" class="px-8 py-3 rounded-full font-bold transition-all transform hover:scale-105 tab-inactive">
                         USA Physical Machine
@@ -406,7 +406,7 @@
 
                 <div id="product-residential" class="product-group transition-all duration-300">
                     <div class="text-center mb-10">
-                        <h3 class="text-2xl font-bold text-white">USA Residential VPS</h3>
+                        <h3 class="text-2xl font-bold text-white">🇺🇸 USA Residential VPS</h3>
                         <p class="text-slate-400">Dedicated Residential high-performance hardware</p>
                     </div>
 
@@ -794,12 +794,25 @@
 
     <footer class="bg-black/40 border-t border-white/10 py-8 mt-auto">
         <div class="max-w-7xl mx-auto px-4 text-center">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-                <div class="text-xl font-bold text-white">
-                    Native<span class="text-purple-400">VM</span><span class="text-slate-400">.live</span>
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="flex-1 md:text-left text-center">
+                    <div class="text-xl font-bold text-white">
+                        Native<span class="text-purple-400">VM</span><span class="text-slate-400">.live</span>
+                    </div>
                 </div>
-                <div class="text-slate-500 text-sm">
-                    &copy; 2026 NativeVM.live - All rights reserved.
+
+                <div class="flex items-center gap-4 bg-white/5 px-6 py-2 rounded-full backdrop-blur-sm border border-white/5">
+                    <span class="text-slate-400 text-sm font-medium mr-2">Supported Payments:</span>
+                    <img src="https://cryptologos.cc/logos/tether-usdt-logo.png?v=029" alt="USDT" class="h-6 w-auto opacity-80 hover:opacity-100 transition-opacity" title="USDT">
+                    <img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png?v=029" alt="BTC" class="h-6 w-auto opacity-80 hover:opacity-100 transition-opacity" title="Bitcoin">
+                    <img src="https://cryptologos.cc/logos/litecoin-ltc-logo.png?v=029" alt="LTC" class="h-6 w-auto opacity-80 hover:opacity-100 transition-opacity" title="Litecoin">
+                    <img src="https://cryptologos.cc/logos/ethereum-eth-logo.png?v=029" alt="ETH" class="h-6 w-auto opacity-80 hover:opacity-100 transition-opacity" title="Ethereum">
+                    <img src="https://cryptologos.cc/logos/binance-coin-bnb-logo.png?v=029" alt="Binance" class="h-6 w-auto opacity-80 hover:opacity-100 transition-opacity" title="Binance Pay">
+                    <img src="https://seeklogo.com/images/B/bybit-logo-4C31FD6A08-seeklogo.com.png" alt="Bybit" class="h-5 w-auto opacity-80 hover:opacity-100 transition-opacity" title="Bybit">
+                </div>
+
+                <div class="flex-1 md:text-right text-center text-slate-500 text-sm">
+                    &copy; 2026 - All rights reserved.
                 </div>
             </div>
         </div>
