@@ -144,6 +144,37 @@
             transform: translateY(-2px);
         }
 
+        /* Tab Active State */
+        .tab-active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+        }
+
+        .tab-inactive {
+            background: rgba(255, 255, 255, 0.05);
+            color: #9ca3af;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .tab-inactive:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        /* Mobile Menu */
+        #mobile-menu {
+            transition: all 0.3s ease-in-out;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+        }
+        #mobile-menu.open {
+            max-height: 400px;
+            opacity: 1;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #0B0F19; }
         ::-webkit-scrollbar-thumb { background: #667eea; border-radius: 4px; }
@@ -260,11 +291,20 @@
                     <a href="#" onclick="switchPage('contact'); return false;" id="nav-contact" class="nav-link hover:text-white transition-colors">Contact</a>
                 </div>
 
-                <div>
-                    <a href="https://t.me/NativeVM" target="_blank" class="btn-gradient text-white px-6 py-2.5 rounded-full text-sm font-bold transition-all hover:scale-105">
-                        Order Now
-                    </a>
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="text-white hover:text-purple-400 focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
                 </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="glass md:hidden">
+            <div class="px-4 pt-2 pb-6 space-y-2 text-center">
+                <a href="#" onclick="switchPage('home'); toggleMobileMenu(); return false;" class="block px-3 py-3 text-base font-medium text-slate-300 hover:text-white hover:bg-white/10 rounded-md">Home</a>
+                <a href="#" onclick="switchPage('products'); toggleMobileMenu(); return false;" class="block px-3 py-3 text-base font-medium text-slate-300 hover:text-white hover:bg-white/10 rounded-md">Products</a>
+                <a href="#" onclick="switchPage('locations'); toggleMobileMenu(); return false;" class="block px-3 py-3 text-base font-medium text-slate-300 hover:text-white hover:bg-white/10 rounded-md">Locations</a>
+                <a href="#" onclick="switchPage('contact'); toggleMobileMenu(); return false;" class="block px-3 py-3 text-base font-medium text-slate-300 hover:text-white hover:bg-white/10 rounded-md">Contact</a>
             </div>
         </div>
     </nav>
@@ -339,304 +379,160 @@
 
         <section id="products" class="page-view hidden-section py-16 relative">
             <div class="max-w-7xl mx-auto px-4">
-                
-                <div class="text-center mb-16">
-                    <h2 class="text-4xl md:text-5xl font-bold mb-4">USA Residential <span class="text-gradient">VPS</span></h2>
-                    <p class="text-slate-400 text-lg">Dedicated Residential high-performance hardware</p>
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4">Choose Your <span class="text-gradient">Plan</span></h2>
+                    <p class="text-slate-400 text-lg">Select the perfect solution for your needs</p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-24">
-                    
-                    <div class="glass-card p-8 rounded-2xl">
-                        <h3 class="text-2xl font-bold text-white mb-2">Basic</h3>
-                        <div class="flex items-baseline mb-6">
-                            <span class="text-5xl font-bold text-white">$18</span>
-                            <span class="text-slate-400 ml-2">/Monthly</span>
-                        </div>
-                        
-                        <ul class="space-y-4 mb-8 text-slate-300">
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-microchip text-purple-500 live-icon"></i>
-                                <span>CPU: 2 Cores</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-memory text-purple-500 live-icon" style="animation-delay: 0.2s;"></i>
-                                <span>RAM: 2GB</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-hard-drive text-purple-500 live-icon" style="animation-delay: 0.4s;"></i>
-                                <span>Storage: 40GB NVMe</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-network-wired text-purple-500 live-icon" style="animation-delay: 0.6s;"></i>
-                                <span>Connectivity: 1Gbps Port</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-globe text-purple-500 live-icon" style="animation-delay: 0.8s;"></i>
-                                <span>1 Residential IPv4</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-shield-halved text-purple-500 live-icon" style="animation-delay: 1s;"></i>
-                                <span>Advanced DDoS Protection</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-desktop text-purple-500 live-icon" style="animation-delay: 1.2s;"></i>
-                                <span>Linux or Windows</span>
-                            </li>
-                        </ul>
-                        
-                        <a href="https://t.me/NativeVM" target="_blank" class="block w-full py-3 rounded-full border-2 border-purple-500/50 text-center font-bold text-white hover:bg-purple-500/20 transition-all">
-                            Order Now
-                        </a>
-                    </div>
-
-                    <div class="relative glass-card p-8 rounded-2xl border-2 border-purple-500/50 transform md:scale-105 z-10">
-                        <div class="absolute -top-4 left-1/2 -translate-x-1/2 pricing-badge px-6 py-2 rounded-full text-white text-sm font-bold">
-                            POPULAR
-                        </div>
-                        
-                        <h3 class="text-2xl font-bold text-white mb-2">Starter</h3>
-                        <div class="flex items-baseline mb-6">
-                            <span class="text-5xl font-bold text-white">$25</span>
-                            <span class="text-slate-400 ml-2">/Monthly</span>
-                        </div>
-                        
-                        <ul class="space-y-4 mb-8 text-slate-300">
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-microchip text-purple-400 live-icon"></i>
-                                <span>CPU: 4 Cores</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-memory text-purple-400 live-icon" style="animation-delay: 0.2s;"></i>
-                                <span>RAM: 4GB</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-hard-drive text-purple-400 live-icon" style="animation-delay: 0.4s;"></i>
-                                <span>Storage: 60GB NVMe</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-network-wired text-purple-400 live-icon" style="animation-delay: 0.6s;"></i>
-                                <span>Connectivity: 1Gbps Port</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-globe text-purple-400 live-icon" style="animation-delay: 0.8s;"></i>
-                                <span>1 Residential IPv4</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-shield-halved text-purple-400 live-icon" style="animation-delay: 1s;"></i>
-                                <span>Advanced DDoS Protection</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-desktop text-purple-400 live-icon" style="animation-delay: 1.2s;"></i>
-                                <span>Linux or Windows</span>
-                            </li>
-                        </ul>
-                        
-                        <a href="https://t.me/NativeVM" target="_blank" class="block w-full btn-gradient py-4 rounded-full text-center font-bold text-white transition-all hover:scale-105">
-                            Order Now
-                        </a>
-                    </div>
-
-                    <div class="glass-card p-8 rounded-2xl relative">
-                        <div class="absolute -top-4 right-4 bg-gradient-to-r from-purple-600 to-blue-600 px-4 py-1 rounded-full text-white text-xs font-bold">
-                            BEST VALUE
-                        </div>
-                        
-                        <h3 class="text-2xl font-bold text-white mb-2">Professional</h3>
-                        <div class="flex items-baseline mb-6">
-                            <span class="text-5xl font-bold text-white">$45</span>
-                            <span class="text-slate-400 ml-2">/Monthly</span>
-                        </div>
-                        
-                        <ul class="space-y-4 mb-8 text-slate-300">
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-microchip text-purple-500 live-icon"></i>
-                                <span>CPU: 8 Cores</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-memory text-purple-500 live-icon" style="animation-delay: 0.2s;"></i>
-                                <span>RAM: 8GB</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-hard-drive text-purple-500 live-icon" style="animation-delay: 0.4s;"></i>
-                                <span>Storage: 100GB NVMe</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-network-wired text-purple-500 live-icon" style="animation-delay: 0.6s;"></i>
-                                <span>Connectivity: 1Gbps Port</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-globe text-purple-500 live-icon" style="animation-delay: 0.8s;"></i>
-                                <span>1 Residential IPv4</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-shield-halved text-purple-500 live-icon" style="animation-delay: 1s;"></i>
-                                <span>Advanced DDoS Protection</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-desktop text-purple-500 live-icon" style="animation-delay: 1.2s;"></i>
-                                <span>Linux or Windows</span>
-                            </li>
-                        </ul>
-                        
-                        <a href="https://t.me/NativeVM" target="_blank" class="block w-full py-3 rounded-full border-2 border-purple-500/50 text-center font-bold text-white hover:bg-purple-500/20 transition-all">
-                            Order Now
-                        </a>
-                    </div>
-
+                <div class="flex justify-center gap-4 mb-16 flex-wrap">
+                    <button onclick="toggleProductTab('residential')" id="tab-residential" class="px-8 py-3 rounded-full font-bold transition-all transform hover:scale-105 tab-active">
+                        USA Residential VPS
+                    </button>
+                    <button onclick="toggleProductTab('physical')" id="tab-physical" class="px-8 py-3 rounded-full font-bold transition-all transform hover:scale-105 tab-inactive">
+                        USA Physical Machine
+                    </button>
                 </div>
 
-                <div class="text-center mb-16">
-                    <h2 class="text-4xl md:text-5xl font-bold mb-4">USA Physical <span class="text-gradient">Machine</span></h2>
-                    <p class="text-slate-400 text-lg">Dedicated Residential high-performance hardware</p>
+                <div id="product-residential" class="product-group transition-all duration-300">
+                    <div class="text-center mb-10">
+                        <h3 class="text-3xl md:text-4xl font-bold text-white mb-2">USA Residential VPS</h3>
+                        <p class="text-slate-400">Dedicated Residential high-performance hardware</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                        <div class="glass-card p-8 rounded-2xl">
+                            <h3 class="text-2xl font-bold text-white mb-2">Basic</h3>
+                            <div class="flex items-baseline mb-6">
+                                <span class="text-5xl font-bold text-white">$18</span>
+                                <span class="text-slate-400 ml-2">/Monthly</span>
+                            </div>
+                            <ul class="space-y-4 mb-8 text-slate-300">
+                                <li class="flex items-center gap-3"><i class="fas fa-microchip text-purple-500 live-icon"></i><span>CPU: 2 Cores</span></li>
+                                <li class="flex items-center gap-3"><i class="fas fa-memory text-purple-500 live-icon" style="animation-delay: 0.2s;"></i><span>RAM: 2GB</span></li>
+                                <li class="flex items-center gap-3"><i class="fas fa-hard-drive text-purple-500 live-icon" style="animation-delay: 0.4s;"></i><span>Storage: 40GB NVMe</span></li>
+                                <li class="flex items-center gap-3"><i class="fas fa-network-wired text-purple-500 live-icon" style="animation-delay: 0.6s;"></i><span>Connectivity: 1Gbps Port</span></li>
+                                <li class="flex items-center gap-3"><i class="fas fa-globe text-purple-500 live-icon" style="animation-delay: 0.8s;"></i><span>1 Residential IPv4</span></li>
+                                <li class="flex items-center gap-3"><i class="fas fa-shield-halved text-purple-500 live-icon" style="animation-delay: 1s;"></i><span>Advanced DDoS Protection</span></li>
+                                <li class="flex items-center gap-3"><i class="fas fa-desktop text-purple-500 live-icon" style="animation-delay: 1.2s;"></i><span>Linux or Windows</span></li>
+                            </ul>
+                            <a href="https://t.me/NativeVM" target="_blank" class="block w-full py-3 rounded-full border-2 border-purple-500/50 text-center font-bold text-white hover:bg-purple-500/20 transition-all">Order Now</a>
+                        </div>
+
+                        <div class="relative glass-card p-8 rounded-2xl border-2 border-purple-500/50 transform md:scale-105 z-10">
+                            <div class="absolute -top-4 left-1/2 -translate-x-1/2 pricing-badge px-6 py-2 rounded-full text-white text-sm font-bold">POPULAR</div>
+                            <h3 class="text-2xl font-bold text-white mb-2">Starter</h3>
+                            <div class="flex items-baseline mb-6">
+                                <span class="text-5xl font-bold text-white">$25</span>
+                                <span class="text-slate-400 ml-2">/Monthly</span>
+                            </div>
+                            <ul class="space-y-4 mb-8 text-slate-300">
+                                <li class="flex items-center gap-3"><i class="fas fa-microchip text-purple-400 live-icon"></i><span>CPU: 4 Cores</span></li>
+                                <li class="flex items-center gap-3"><i class="fas fa-memory text-purple-400 live-icon" style="animation-delay: 0.2s;"></i><span>RAM: 4GB</span></li>
+                                <li class="flex items-center gap-3"><i class="fas fa-hard-drive text-purple-400 live-icon" style="animation-delay: 0.4s;"></i><span>Storage: 60GB NVMe</span></li>
+                                <li class="flex items-center gap-3"><i class="fas fa-network-wired text-purple-400 live-icon" style="animation-delay: 0.6s;"></i><span>Connectivity: 1Gbps Port</span></li>
+                                <li class="flex items-center gap-3"><i class="fas fa-globe text-purple-400 live-icon" style="animation-delay: 0.8s;"></i><span>1 Residential IPv4</span></li>
+                                <li class="flex items-center gap-3"><i class="fas fa-shield-halved text-purple-400 live-icon" style="animation-delay: 1s;"></i><span>Advanced DDoS Protection</span></li>
+                                <li class="flex items-center gap-3"><i class="fas fa-desktop text-purple-400 live-icon" style="animation-delay: 1.2s;"></i><span>Linux or Windows</span></li>
+                            </ul>
+                            <a href="https://t.me/NativeVM" target="_blank" class="block w-full btn-gradient py-4 rounded-full text-center font-bold text-white transition-all hover:scale-105">Order Now</a>
+                        </div>
+
+                        <div class="glass-card p-8 rounded-2xl relative">
+                            <div class="absolute -top-4 right-4 bg-gradient-to-r from-purple-600 to-blue-600 px-4 py-1 rounded-full text-white text-xs font-bold">BEST VALUE</div>
+                            <h3 class="text-2xl font-bold text-white mb-2">Professional</h3>
+                            <div class="flex items-baseline mb-6">
+                                <span class="text-5xl font-bold text-white">$45</span>
+                                <span class="text-slate-400 ml-2">/Monthly</span>
+                            </div>
+                            <ul class="space-y-4 mb-8 text-slate-300">
+                                <li class="flex items-center gap-3"><i class="fas fa-microchip text-purple-500 live-icon"></i><span>CPU: 8 Cores</span></li>
+                                <li class="flex items-center gap-3"><i class="fas fa-memory text-purple-500 live-icon" style="animation-delay: 0.2s;"></i><span>RAM: 8GB</span></li>
+                                <li class="flex items-center gap-3"><i class="fas fa-hard-drive text-purple-500 live-icon" style="animation-delay: 0.4s;"></i><span>Storage: 100GB NVMe</span></li>
+                                <li class="flex items-center gap-3"><i class="fas fa-network-wired text-purple-500 live-icon" style="animation-delay: 0.6s;"></i><span>Connectivity: 1Gbps Port</span></li>
+                                <li class="flex items-center gap-3"><i class="fas fa-globe text-purple-500 live-icon" style="animation-delay: 0.8s;"></i><span>1 Residential IPv4</span></li>
+                                <li class="flex items-center gap-3"><i class="fas fa-shield-halved text-purple-500 live-icon" style="animation-delay: 1s;"></i><span>Advanced DDoS Protection</span></li>
+                                <li class="flex items-center gap-3"><i class="fas fa-desktop text-purple-500 live-icon" style="animation-delay: 1.2s;"></i><span>Linux or Windows</span></li>
+                            </ul>
+                            <a href="https://t.me/NativeVM" target="_blank" class="block w-full py-3 rounded-full border-2 border-purple-500/50 text-center font-bold text-white hover:bg-purple-500/20 transition-all">Order Now</a>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                    
-                    <div class="glass-card p-8 rounded-2xl">
-                        <h3 class="text-2xl font-bold text-white mb-2">STARTER</h3>
-                        <div class="flex items-baseline mb-6">
-                            <span class="text-4xl font-bold text-white">$150</span>
-                            <span class="text-slate-400 ml-2 text-sm">/ Monthly</span>
-                        </div>
-                        
-                        <ul class="space-y-4 mb-8 text-slate-300 text-sm">
-                            <li class="flex items-start gap-3">
-                                <i class="fas fa-microchip text-purple-500 mt-1 live-icon"></i>
-                                <span>CPU: Intel® Xeon® E3-1230 v5</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-memory text-purple-500 live-icon" style="animation-delay: 0.2s;"></i>
-                                <span>RAM: 16GB</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-hard-drive text-purple-500 live-icon" style="animation-delay: 0.4s;"></i>
-                                <span>Storage: 256GB NVMe</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-network-wired text-purple-500 live-icon" style="animation-delay: 0.6s;"></i>
-                                <span>Connectivity: 100Mbps Port</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-globe text-purple-500 live-icon" style="animation-delay: 0.8s;"></i>
-                                <span>IP: 4 Residential IPv4</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-shield-halved text-purple-500 live-icon" style="animation-delay: 1s;"></i>
-                                <span>Advanced DDoS Protection</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-desktop text-purple-500 live-icon" style="animation-delay: 1.2s;"></i>
-                                <span>Linux or Windows</span>
-                            </li>
-                        </ul>
-                        
-                        <a href="https://t.me/NativeVM" target="_blank" class="block w-full py-3 rounded-full border-2 border-purple-500/50 text-center font-bold text-white hover:bg-purple-500/20 transition-all">
-                            Order Now
-                        </a>
+                <div id="product-physical" class="product-group hidden transition-all duration-300">
+                    <div class="text-center mb-10">
+                        <h3 class="text-3xl md:text-4xl font-bold text-white mb-2">USA Physical Machine</h3>
+                        <p class="text-slate-400">Dedicated Residential high-performance hardware</p>
                     </div>
 
-                    <div class="relative glass-card p-8 rounded-2xl border-2 border-purple-500/50 transform md:scale-105 z-10">
-                        <div class="absolute -top-4 left-1/2 -translate-x-1/2 pricing-badge px-6 py-2 rounded-full text-white text-sm font-bold">
-                            POPULAR
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                        <div class="glass-card p-8 rounded-2xl">
+                            <h3 class="text-2xl font-bold text-white mb-2">STARTER</h3>
+                            <div class="flex items-baseline mb-6">
+                                <span class="text-4xl font-bold text-white">$150</span>
+                                <span class="text-slate-400 ml-2 text-sm">/ Monthly</span>
+                            </div>
+                            <ul class="space-y-4 mb-8 text-slate-300 text-sm">
+                                <li class="flex items-start gap-3"><i class="fas fa-microchip text-purple-500 mt-1 live-icon"></i><span>CPU: Intel® Xeon® E3-1230 v5</span></li>
+                                <li class="flex items-center gap-3"><i class="fas fa-memory text-purple-500 live-icon" style="animation-delay: 0.2s;"></i><span>RAM: 16GB</span></li>
+                                <li class="flex items-center gap-3"><i class="fas fa-hard-drive text-purple-500 live-icon" style="animation-delay: 0.4s;"></i><span>Storage: 256GB NVMe</span></li>
+                                <li class="flex items-center gap-3"><i class="fas fa-network-wired text-purple-500 live-icon" style="animation-delay: 0.6s;"></i><span>Connectivity: 100Mbps Port</span></li>
+                                <li class="flex items-center gap-3"><i class="fas fa-globe text-purple-500 live-icon" style="animation-delay: 0.8s;"></i><span>IP: 4 Residential IPv4</span></li>
+                                <li class="flex items-center gap-3"><i class="fas fa-shield-halved text-purple-500 live-icon" style="animation-delay: 1s;"></i><span>Advanced DDoS Protection</span></li>
+                                <li class="flex items-center gap-3"><i class="fas fa-desktop text-purple-500 live-icon" style="animation-delay: 1.2s;"></i><span>Linux or Windows</span></li>
+                            </ul>
+                            <a href="https://t.me/NativeVM" target="_blank" class="block w-full py-3 rounded-full border-2 border-purple-500/50 text-center font-bold text-white hover:bg-purple-500/20 transition-all">Order Now</a>
                         </div>
-                        
-                        <h3 class="text-2xl font-bold text-white mb-2">PRO</h3>
-                        <div class="flex items-baseline mb-6">
-                            <span class="text-4xl font-bold text-white">$550</span>
-                            <span class="text-slate-400 ml-2 text-sm">/ Monthly</span>
-                        </div>
-                        
-                        <ul class="space-y-4 mb-8 text-slate-300 text-sm">
-                            <li class="flex items-start gap-3">
-                                <i class="fas fa-microchip text-purple-400 mt-1 live-icon"></i>
-                                <span>CPU: Intel® Xeon® E3-1230 v5</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-memory text-purple-400 live-icon" style="animation-delay: 0.2s;"></i>
-                                <span>RAM: 16GB</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-hard-drive text-purple-400 live-icon" style="animation-delay: 0.4s;"></i>
-                                <span>Storage: 256GB NVMe</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-network-wired text-purple-400 live-icon" style="animation-delay: 0.6s;"></i>
-                                <span>Connectivity: 1Gbps Port</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-globe text-purple-400 live-icon" style="animation-delay: 0.8s;"></i>
-                                <span>IP: 254 Residential IPv4</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-shield-halved text-purple-400 live-icon" style="animation-delay: 1s;"></i>
-                                <span>Advanced DDoS Protection</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-desktop text-purple-400 live-icon" style="animation-delay: 1.2s;"></i>
-                                <span>Linux or Windows</span>
-                            </li>
-                        </ul>
-                        
-                        <a href="https://t.me/NativeVM" target="_blank" class="block w-full btn-gradient py-4 rounded-full text-center font-bold text-white transition-all hover:scale-105">
-                            Order Now
-                        </a>
-                    </div>
 
-                    <div class="glass-card p-8 rounded-2xl relative">
-                        <div class="absolute -top-4 right-4 bg-gradient-to-r from-purple-600 to-blue-600 px-4 py-1 rounded-full text-white text-xs font-bold">
-                            BEST VALUE
+                        <div class="relative glass-card p-8 rounded-2xl border-2 border-purple-500/50 transform md:scale-105 z-10">
+                            <div class="absolute -top-4 left-1/2 -translate-x-1/2 pricing-badge px-6 py-2 rounded-full text-white text-sm font-bold">POPULAR</div>
+                            <h3 class="text-2xl font-bold text-white mb-2">PRO</h3>
+                            <div class="flex items-baseline mb-6">
+                                <span class="text-4xl font-bold text-white">$550</span>
+                                <span class="text-slate-400 ml-2 text-sm">/ Monthly</span>
+                            </div>
+                            <ul class="space-y-4 mb-8 text-slate-300 text-sm">
+                                <li class="flex items-start gap-3"><i class="fas fa-microchip text-purple-400 mt-1 live-icon"></i><span>CPU: Intel® Xeon® E3-1230 v5</span></li>
+                                <li class="flex items-center gap-3"><i class="fas fa-memory text-purple-400 live-icon" style="animation-delay: 0.2s;"></i><span>RAM: 16GB</span></li>
+                                <li class="flex items-center gap-3"><i class="fas fa-hard-drive text-purple-400 live-icon" style="animation-delay: 0.4s;"></i><span>Storage: 256GB NVMe</span></li>
+                                <li class="flex items-center gap-3"><i class="fas fa-network-wired text-purple-400 live-icon" style="animation-delay: 0.6s;"></i><span>Connectivity: 1Gbps Port</span></li>
+                                <li class="flex items-center gap-3"><i class="fas fa-globe text-purple-400 live-icon" style="animation-delay: 0.8s;"></i><span>IP: 254 Residential IPv4</span></li>
+                                <li class="flex items-center gap-3"><i class="fas fa-shield-halved text-purple-400 live-icon" style="animation-delay: 1s;"></i><span>Advanced DDoS Protection</span></li>
+                                <li class="flex items-center gap-3"><i class="fas fa-desktop text-purple-400 live-icon" style="animation-delay: 1.2s;"></i><span>Linux or Windows</span></li>
+                            </ul>
+                            <a href="https://t.me/NativeVM" target="_blank" class="block w-full btn-gradient py-4 rounded-full text-center font-bold text-white transition-all hover:scale-105">Order Now</a>
                         </div>
-                        
-                        <h3 class="text-2xl font-bold text-white mb-2">ELITE</h3>
-                        <div class="flex items-baseline mb-6">
-                            <span class="text-4xl font-bold text-white">$999</span>
-                            <span class="text-slate-400 ml-2 text-sm">/ Monthly</span>
-                        </div>
-                        
-                        <ul class="space-y-4 mb-8 text-slate-300 text-sm">
-                            <li class="flex items-start gap-3">
-                                <i class="fas fa-microchip text-purple-500 mt-1 live-icon"></i>
-                                <span>CPU: Intel® Xeon® E5-2680 v4</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-memory text-purple-500 live-icon" style="animation-delay: 0.2s;"></i>
-                                <span>RAM: 256GB</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-hard-drive text-purple-500 live-icon" style="animation-delay: 0.4s;"></i>
-                                <span>Storage: 4TB NVMe</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-network-wired text-purple-500 live-icon" style="animation-delay: 0.6s;"></i>
-                                <span>Connectivity: 1Gbps Port</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-globe text-purple-500 live-icon" style="animation-delay: 0.8s;"></i>
-                                <span>IP: 254 Residential IPv4</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-shield-halved text-purple-500 live-icon" style="animation-delay: 1s;"></i>
-                                <span>Advanced DDoS Protection</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-desktop text-purple-500 live-icon" style="animation-delay: 1.2s;"></i>
-                                <span>Linux or Windows</span>
-                            </li>
-                        </ul>
-                        
-                        <a href="https://t.me/NativeVM" target="_blank" class="block w-full py-3 rounded-full border-2 border-purple-500/50 text-center font-bold text-white hover:bg-purple-500/20 transition-all">
-                            Order Now
-                        </a>
-                    </div>
 
+                        <div class="glass-card p-8 rounded-2xl relative">
+                            <div class="absolute -top-4 right-4 bg-gradient-to-r from-purple-600 to-blue-600 px-4 py-1 rounded-full text-white text-xs font-bold">BEST VALUE</div>
+                            <h3 class="text-2xl font-bold text-white mb-2">ELITE</h3>
+                            <div class="flex items-baseline mb-6">
+                                <span class="text-4xl font-bold text-white">$999</span>
+                                <span class="text-slate-400 ml-2 text-sm">/ Monthly</span>
+                            </div>
+                            <ul class="space-y-4 mb-8 text-slate-300 text-sm">
+                                <li class="flex items-start gap-3"><i class="fas fa-microchip text-purple-500 mt-1 live-icon"></i><span>CPU: Intel® Xeon® E5-2680 v4</span></li>
+                                <li class="flex items-center gap-3"><i class="fas fa-memory text-purple-500 live-icon" style="animation-delay: 0.2s;"></i><span>RAM: 256GB</span></li>
+                                <li class="flex items-center gap-3"><i class="fas fa-hard-drive text-purple-500 live-icon" style="animation-delay: 0.4s;"></i><span>Storage: 4TB NVMe</span></li>
+                                <li class="flex items-center gap-3"><i class="fas fa-network-wired text-purple-500 live-icon" style="animation-delay: 0.6s;"></i><span>Connectivity: 1Gbps Port</span></li>
+                                <li class="flex items-center gap-3"><i class="fas fa-globe text-purple-500 live-icon" style="animation-delay: 0.8s;"></i><span>IP: 254 Residential IPv4</span></li>
+                                <li class="flex items-center gap-3"><i class="fas fa-shield-halved text-purple-500 live-icon" style="animation-delay: 1s;"></i><span>Advanced DDoS Protection</span></li>
+                                <li class="flex items-center gap-3"><i class="fas fa-desktop text-purple-500 live-icon" style="animation-delay: 1.2s;"></i><span>Linux or Windows</span></li>
+                            </ul>
+                            <a href="https://t.me/NativeVM" target="_blank" class="block w-full py-3 rounded-full border-2 border-purple-500/50 text-center font-bold text-white hover:bg-purple-500/20 transition-all">Order Now</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
         <section id="locations" class="page-view hidden-section py-16 relative">
             <div class="max-w-7xl mx-auto px-4">
-                
+                <div class="text-center mb-16">
+                    <h2 class="text-5xl md:text-6xl font-black mb-6 text-3d tracking-wider leading-tight">
+                        Residential Locations
+                    </h2>
+                </div>
+
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
                     
                     <div class="glass-card p-6 rounded-2xl text-center hover:scale-105 transition-transform duration-300">
@@ -773,24 +669,20 @@
 
     <script>
         function switchPage(pageId) {
-            // 1. Hide all sections
             const pages = document.querySelectorAll('.page-view');
             pages.forEach(page => {
                 page.classList.add('hidden-section');
             });
 
-            // 2. Remove active state from all nav links
             const navLinks = document.querySelectorAll('.nav-link');
             navLinks.forEach(link => {
                 link.classList.remove('active');
             });
 
-            // 3. Show the selected section
             const targetPage = document.getElementById(pageId);
             if (targetPage) {
                 targetPage.classList.remove('hidden-section');
                 
-                // Add fade-in animation effect
                 targetPage.style.opacity = '0';
                 setTimeout(() => {
                     targetPage.style.transition = 'opacity 0.3s ease-in-out';
@@ -798,17 +690,46 @@
                 }, 10);
             }
 
-            // 4. Set active state on nav link
             const activeLink = document.getElementById('nav-' + pageId);
             if (activeLink) {
                 activeLink.classList.add('active');
             }
 
-            // 5. Scroll to top instantly
             window.scrollTo(0, 0);
         }
 
-        // Initialize Home on load
+        // Product Tab Logic
+        function toggleProductTab(tabId) {
+            const resTab = document.getElementById('tab-residential');
+            const physTab = document.getElementById('tab-physical');
+            const resProd = document.getElementById('product-residential');
+            const physProd = document.getElementById('product-physical');
+
+            if (tabId === 'residential') {
+                resTab.classList.add('tab-active');
+                resTab.classList.remove('tab-inactive');
+                physTab.classList.add('tab-inactive');
+                physTab.classList.remove('tab-active');
+
+                resProd.classList.remove('hidden');
+                physProd.classList.add('hidden');
+            } else {
+                physTab.classList.add('tab-active');
+                physTab.classList.remove('tab-inactive');
+                resTab.classList.add('tab-inactive');
+                resTab.classList.remove('tab-active');
+
+                physProd.classList.remove('hidden');
+                resProd.classList.add('hidden');
+            }
+        }
+
+        // Mobile Menu Logic
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('open');
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             switchPage('home');
         });
