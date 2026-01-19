@@ -226,6 +226,15 @@
         html.dark .nav-link.active { color: white; text-shadow: 0 0 10px rgba(102, 126, 234, 0.5); }
 
         /* --- 3D LIVE ICON EFFECT --- */
+        /* Updated Feature Icon Size and Style */
+        .feature-icon {
+            font-size: 4.5rem; /* Large Size */
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            filter: drop-shadow(0 4px 4px rgba(0,0,0,0.1));
+        }
+
         .live-icon {
             display: inline-block;
             animation: icon-3d-float 4s ease-in-out infinite;
@@ -233,14 +242,15 @@
             will-change: transform;
         }
 
+        /* Enhanced 3D Animation */
         @keyframes icon-3d-float {
             0% {
                 transform: perspective(1000px) rotateY(0deg) translateY(0) scale(1);
                 filter: drop-shadow(0 0 0 rgba(0,0,0,0));
             }
             50% {
-                transform: perspective(1000px) rotateY(20deg) translateY(-4px) scale(1.1);
-                filter: drop-shadow(5px 5px 10px rgba(102, 126, 234, 0.5));
+                transform: perspective(1000px) rotateY(25deg) translateY(-8px) scale(1.15); /* More rotation, more lift, more scale */
+                filter: drop-shadow(8px 8px 12px rgba(102, 126, 234, 0.4)); /* Stronger shadow for 3D depth */
             }
             100% {
                 transform: perspective(1000px) rotateY(0deg) translateY(0) scale(1);
@@ -344,32 +354,32 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <div class="glass-card p-8 rounded-2xl text-center">
-                        <div class="feature-icon mb-4 live-icon">🚀</div>
+                        <div class="feature-icon live-icon">🚀</div>
                         <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Instant Deployment</h3>
                         <p class="text-gray-600 dark:text-slate-400">Launch your VPS instance in seconds with automated provisioning and setup.</p>
                     </div>
                     <div class="glass-card p-8 rounded-2xl text-center">
-                        <div class="feature-icon mb-4 live-icon" style="animation-delay: 0.2s;">🏠</div>
+                        <div class="feature-icon live-icon" style="animation-delay: 0.2s;">🏠</div>
                         <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Residential IPs</h3>
                         <p class="text-gray-600 dark:text-slate-400">Genuine ISP/Residential IP addresses that won't get flagged or blocked.</p>
                     </div>
                     <div class="glass-card p-8 rounded-2xl text-center">
-                        <div class="feature-icon mb-4 live-icon" style="animation-delay: 0.4s;">🛡️</div>
+                        <div class="feature-icon live-icon" style="animation-delay: 0.4s;">🛡️</div>
                         <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">DDoS Protection</h3>
                         <p class="text-gray-600 dark:text-slate-400">Advanced security measures to keep your operations safe and running.</p>
                     </div>
                     <div class="glass-card p-8 rounded-2xl text-center">
-                        <div class="feature-icon mb-4 live-icon" style="animation-delay: 0.6s;">⚡</div>
+                        <div class="feature-icon live-icon" style="animation-delay: 0.6s;">⚡</div>
                         <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">High Performance</h3>
                         <p class="text-gray-600 dark:text-slate-400">1Gbps uplink connectivity for lightning-fast data transfer speeds.</p>
                     </div>
                     <div class="glass-card p-8 rounded-2xl text-center">
-                        <div class="feature-icon mb-4 live-icon" style="animation-delay: 0.8s;">💻</div>
+                        <div class="feature-icon live-icon" style="animation-delay: 0.8s;">💻</div>
                         <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Flexible OS</h3>
                         <p class="text-gray-600 dark:text-slate-400">Choose between Linux or Windows to match your workflow requirements.</p>
                     </div>
                     <div class="glass-card p-8 rounded-2xl text-center">
-                        <div class="feature-icon mb-4 live-icon" style="animation-delay: 1s;">🌐</div>
+                        <div class="feature-icon live-icon" style="animation-delay: 1s;">🌐</div>
                         <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Global Access</h3>
                         <p class="text-gray-600 dark:text-slate-400">Direct connection optimization for the best performance worldwide.</p>
                     </div>
